@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+
+  api:
+    build: .
+    container_name: math-api
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=db
+      - DB_PORT=1433
+      - DB_USER=sa
+      - DB_PASSWORD=Str0ng_Pa55!
+      - DB_NAME=mathdb
+
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver
+    environment:
+      MSSQL_SA_PASSWORD: "Str0ng_Pa55!"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+
+volumes:
+  sqlserver_data:
