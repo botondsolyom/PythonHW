@@ -6,6 +6,7 @@ from app.logic import calc_pow, calc_factorial, calc_fibonacci
 from app.database import SessionLocal, OperationLog
 from datetime import datetime
 
+
 router = APIRouter()
 
 

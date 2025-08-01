@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Math Operations</title>
+  <link rel="stylesheet" href="style.css">
+
+    <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 30px;
+    }
+
+    .logo {
+      width: 100px;
+      height: auto;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      margin-top: 0;
+      font-size: 2.5em;
+      color: #333;
+    }
+  </style>
+
+  <style>
+  h1 {
+    text-align: center;
+    font-size: 2.5em;
+    animation: fadeIn 2s ease-in-out forwards;
+    opacity: 0;
+  }
+
+  @keyframes fadeIn {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+  }
+</style>
+
+  <style>
+  .logo {
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+  }
+</style>
+
+  <style>
+  button {
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+
+  button:hover {
+    background-color: #0055cc;
+    color: white;
+    transform: scale(1.05);
+  }
+</style>
+</head>
+<body>
+  <h1>Math API</h1>
+  <img src="logo.png" alt="Logo" class="logo">
+  <h2>Power Calculation</h2>
+  <input type="number" id="base" placeholder="Base">
+  <input type="number" id="exponent" placeholder="Exponent">
+  <button onclick="calculatePow()">Calculate Power</button>
+  <p id="powResult"></p>
+
+  <h2>Factorial</h2>
+  <input type="number" id="factInput" placeholder="Number">
+  <button onclick="calculateFactorial()">Calculate Factorial</button>
+  <p id="factResult"></p>
+
+  <h2>Fibonacci</h2>
+  <input type="number" id="fibInput" placeholder="n-th Fibonacci">
+  <button onclick="calculateFibonacci()">Calculate Fibonacci</button>
+  <p id="fibResult"></p>
+
+<script>
+  const baseUrl = 'http://localhost:8000';
+
+  async function calculatePow() {
+    const base = parseFloat(document.getElementById('base').value);
+    const exponent = parseFloat(document.getElementById('exponent').value);
+    const response = await fetch(`${baseUrl}/calculate`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ type: "pow", input1: base, input2: exponent })
+    });
+    const data = await response.json();
+    document.getElementById('powResult').innerText = `Result: ${data.result}`;
+  }
+
+  async function calculateFactorial() {
+    const n = parseInt(document.getElementById('factInput').value);
+    const response = await fetch(`${baseUrl}/calculate`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ type: "factorial", input1: n })
+    });
+    const data = await response.json();
+    document.getElementById('factResult').innerText = `Result: ${data.result}`;
+  }
+
+  async function calculateFibonacci() {
+    const n = parseInt(document.getElementById('fibInput').value);
+    const response = await fetch(`${baseUrl}/calculate`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ type: "fibonacci", input1: n })
+    });
+    const data = await response.json();
+    document.getElementById('fibResult').innerText = `Result: ${data.result}`;
+  }
+</script>
+</body>
+</html>
